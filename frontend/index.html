@@ -21,79 +21,13 @@
 		}
 
 		.game{position: relative;}
-
-		.grid{position: absolute;}
-
-		.robot{
-			width: 50px;
-			height: 50px;
-			background: red;
-			position: absolute;
-			margin-top:10px;
-			margin-left: 10px;
-			z-index: 1;
-		}
-
-		.robot span.axis{
-			display: block;
-			position: absolute;
-			left: 45px;
-			top: 12.5px;
-			width: 25px;
-		}
-
-		.robot span.head{
-			display: block;
-			position: absolute;
-			left: 14px;
-			top: 12.5px;
-			width: 25px;
-			height: 25px;
-			background: maroon;
-			z-index: 1;
-		}
-
-		.robot span.arm1{
-			display: block;
-			position: absolute;
-			left: 15px;
-			top: -10px;
-			width: 15px;
-			height: 15px;
-			background: brown;
-			z-index: 1;
-		}
-
-		.robot span.arm2{
-			display: block;
-			position: absolute;
-			left: 15px;
-			top: 46.5px;
-			width: 15px;
-			height: 15px;
-			background: brown;
-			z-index: 1;
-		}
-
-		.grid{
-			width: 385px;
-		}
-
-		.gridItem{
-			width: 75px;
-			height: 75px;
-			background: white;
-			position: relative;
-			float: left;
-			border:1px solid blue;
-		}
 	
 		form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
+		form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+		form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+		#messages { list-style-type: none; margin: 0; padding: 0; }
+		#messages li { padding: 5px 10px; }
+		#messages li:nth-child(odd) { background: #eee; }
 	</style>
 </head>
 <body>
@@ -107,57 +41,15 @@
 
 	<div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
 
-	<div class="game">
-		
-		<div class="robot">
-			<span class="head"></span>
-			<span class="axis">----</span>
-			<span class="arm1"></span>
-			<span class="arm2"></span>
-		</div>
-		
-		<div class="grid">
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-			
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-			<div class="gridItem"></div>
-		</div>
-	</div>
-
 	<script src="scripts/three.min.js"></script>
 	<script>
 		
 		let camera, scene, renderer;
 		let geometry, material, mesh;
 
-	   init();
-	   animate();
-	   function init() {
+		init();
+		animate();
+		function init() {
 			scene = new THREE.Scene();
 	
 			// CAMERA
@@ -200,7 +92,7 @@
 			wireframe: true, wireframeLinewidth: 2 } );
 			mesh = new THREE.Mesh( geometry, material );
 			scene.add( mesh );
-	   }
+		}
 
 		function animate() {
 			requestAnimationFrame( animate );
@@ -209,131 +101,18 @@
 			renderer.render( scene, camera );
 		}
 
-		// =====================================================================================
-
-		let board = [
-			["x","x","x","x","x"],
-			["x","x","x","x","x"],
-			["x","x","x","x","x"],
-			["x","x","x","x","x"],
-			["x","x","x","x","x"],
-		]
-
-		let unit = 77; // px
-
-		function Robot(){
-			this.position = {x:0,y:0};
-			this.toForward = toForward;
-			this.toBackward = toBackward;
-			this.rotateLeft = rotateLeft;
-			this.rotateRight = rotateRight;
-			this.rotation = 0;
-			this.direction = direction;
-			this.repr = document.querySelector(".robot"); //robot representation
-			this.repr.style.transform = "rotate("+ this.rotation + "deg)";
-		}
-
-		function toForward(){
-
-			if(this.position.x >= board.length-1){
-				return;
-			}
-
-			this.position.x++;
-			robot.position[0,this.position.x];
-			board[0][this.position.x] = robot;
-			board[0][this.position.x-1] = "x";
-			this.repr.style.transform = "translateX("+this.position.x * unit+"px)"
-			console.table(board);
-		}
-
-		function toBackward(){
-
-			if(this.position.x <= 0){
-				return;
-			}
-
-			this.position.x--;
-			robot.position[0,this.position.x];
-			board[0][this.position.x] = robot;
-			board[0][this.position.x+1] = "x";
-			this.repr.style.transform = "translateX("+this.position.x * unit+"px)"
-			console.table(board);
-		}
-
-		function rotateLeft(){
-			this.rotation -= 90;
-			this.repr.style.transform = "rotate("+ this.rotation + "deg)";
-			return this.rotation;
-		}
-
-		function rotateRight(){
-			this.rotation += 90;
-			this.repr.style.transform = "rotate("+ this.rotation + "deg)";
-			return this.rotation;
-		}
-
-		function direction(dir){
-			switch(dir){
-				case "right":
-				break;
-				case "left":
-				break;
-				case "top":
-				break;
-				case "bottom":
-				break;
-			}
-
-			return dir;
-		}
-
-		let robot = new Robot();
-		board[0][0] = robot; // initial position.
-
-		document.onkeydown = checkKey;
-
-		let globalScope = this;
-
-		function checkKey(e) {
-
-		    e = e || window.event;
-
-		    if (e.keyCode == '38') {
-		        // up arrow
-		        robot.toForward();
-		    }
-		    else if (e.keyCode == '40') {
-		        // down arrow
-		        robot.toBackward();
-		    }
-		    else if (e.keyCode == '37') {
-		       // left arrow
-		       robot.rotateLeft();
-		       // console.table(board);
-		    }
-		    else if (e.keyCode == '39') {
-		       // right arrow
-		       robot.rotateRight();
-		       // console.table(board);
-		    }
-
-		}
-
-		console.table(board);
-
 		const socket = io();
 
-	      document.getElementById('chatForm').addEventListener('submit', function(evt){
-	          evt.preventDefault();
-	          socket.emit('chat message', document.querySelector("#m").value);
-	      })
+		document.getElementById('chatForm').addEventListener('submit', function(evt){
+			evt.preventDefault();
+			socket.emit('chat message', document.querySelector("#m").value);
+		})
 
-	      socket.on('chat message', function(msg){
-	        let listItem = document.createElement("li");
-	        listItem.innerHTML = msg;
-	        document.querySelector("#messages").append(listItem);
-	      });
+		socket.on('chat message', function(msg){
+			let listItem = document.createElement("li");
+			listItem.innerHTML = msg;
+			document.querySelector("#messages").append(listItem);
+		});
 
 	</script>
 </body>
