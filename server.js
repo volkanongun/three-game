@@ -1,9 +1,11 @@
 
-const express = require('express');
-const app = require('express')();
-const http = require('http').Server(app);
+import express from 'express';
+import http from 'http';
+import SocketIO from 'socket.io';
 
-const io = require('socket.io')(http);
+let app = express();
+let server = http.Server(app);
+let io = new SocketIO(server);
 
 app.use(express.static(__dirname + '/frontend'));
 app.use('/three',express.static(__dirname + '/node_modules/three/build/'));
@@ -22,6 +24,9 @@ io.on('connection', function(socket){
   });
 });
 
-http.listen(4000, function(){
-  console.log('listening on port 4000');
+var httpserver = http.createServer((req, res) => {
+    res.writeHead(200, {'Content-type':'text/html'});
+    res.end('<h1>Hello NodeJS</h1>');
 });
+
+server.listen(4000,() => console.log('Server running on port 4000'));
